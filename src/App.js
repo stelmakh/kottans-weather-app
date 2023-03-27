@@ -1,23 +1,32 @@
-import logo from './logo.svg';
+import {useMemo, useCallback, useState} from 'react';
 import './App.css';
+import SearchBar from './components/SearchBar';
+import WeatherCard from './components/WeatherCard';
+import {WeatherService} from './services'
+
+const apiKey = '01072010da2ad65c37e5d484234a365f';
 
 function App() {
+  const weatherService = useMemo(() => new WeatherService(apiKey), []);
+
+  const [weatherData, setWeatherData] = useState()
+
+  const onSearch = useCallback(
+    (location) => 
+      weatherService
+        .getWeatherForLocation(location)
+        .then(result => setWeatherData(result))
+        .catch(err => console.error(err)),
+    [weatherService]
+  )
+
+  console.log('weatherData', weatherData)
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <SearchBar onSearch={onSearch}/>
+
+      {weatherData ? <WeatherCard weatherData={weatherData}/> : null}
     </div>
   );
 }
