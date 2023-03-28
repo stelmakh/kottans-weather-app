@@ -1,7 +1,12 @@
-import React from 'react'
+import React, { FC } from 'react'
+import { WeatherData } from '../services';
 import './WeatherCard.css'
 
-const WeatherCard = ({ weatherData }) => {
+interface WeatherCardProps {
+  weatherData: WeatherData
+}
+
+const WeatherCard: FC<WeatherCardProps> = ({ weatherData }) => {
   const {
     name,
     description,
