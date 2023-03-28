@@ -1,9 +1,13 @@
-export class WeatherService {
-  constructor(apiKey) {
+import { WeatherData, WeatherService } from "./weather-service";
+
+export class OpenWeatherMapService implements WeatherService {
+  private apiKey: string;
+
+  constructor(apiKey: string) {
     this.apiKey = apiKey;
   }
 
-  async getWeatherForLocation(location) {
+  async getWeatherForLocation(location: string): Promise<WeatherData | undefined> {
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${this.apiKey}&units=metric`;
 
     try {
@@ -16,7 +20,7 @@ export class WeatherService {
     }
   }
 
-  getWeatherDataObject(weatherResponse) {
+  private getWeatherDataObject(weatherResponse: any): WeatherData {
     const { name, weather, main } = weatherResponse;
     const { temp, temp_min, temp_max } = main;
     const [weatherInfo] = weather;
