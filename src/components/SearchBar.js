@@ -6,9 +6,8 @@ const SearchBar = ({onSearch}) => {
   const searchInput = useRef()
   const onSubmit = useCallback((e) =>{
     e.preventDefault()
-    console.log(searchInput.current.value)
     onSearch(searchInput.current.value)
-  }, [])
+  }, [onSearch])
 
   return <form onSubmit={onSubmit} className='search-bar'>
     <input ref={searchInput}/>

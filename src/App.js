@@ -20,8 +20,6 @@ function App() {
     [weatherService]
   )
 
-  console.log('weatherData', weatherData)
-
   return (
     <div className="App">
       <SearchBar onSearch={onSearch}/>
